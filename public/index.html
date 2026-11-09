@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PocketPC</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ height:100dvh;
+ overflow:hidden;
+ font-family:Arial,sans-serif;
+ color:white;
+ background:linear-gradient(135deg,#12365c,#087c9e,#172b58);
+}
+.desktop{height:100%;padding:25px}
+.icons{display:grid;gap:25px;width:90px}
+.app{text-align:center;font-size:13px;cursor:pointer}
+.app span{display:block;font-size:38px;margin-bottom:7px}
+.taskbar{
+ position:absolute;bottom:0;left:0;width:100%;
+ height:65px;background:#101a2cdd;
+ display:flex;align-items:center;
+ justify-content:center;gap:24px;
+ backdrop-filter:blur(20px);
+}
+.taskbar button{
+ border:0;background:transparent;color:white;
+ font-size:25px;padding:8px;cursor:pointer;
+}
+.start{
+ display:none;position:absolute;bottom:75px;
+ left:50%;transform:translateX(-50%);
+ width:min(90%,380px);height:390px;
+ background:#17243aee;border-radius:18px;
+ padding:25px;
+}
+.start h2{margin-top:0}
+.start button{
+ display:block;width:100%;padding:15px;
+ margin:10px 0;border:0;border-radius:9px;
+ background:#263e5d;color:white;font-size:15px;
+}
+.window{
+ display:none;position:absolute;top:15%;left:5%;
+ width:90%;height:60%;background:#f1f4f8;
+ color:#17243a;border-radius:12px;
+ overflow:hidden;
+}
+.window header{
+ background:#dce5ef;padding:15px;
+ display:flex;justify-content:space-between;
+}
+.window main{padding:20px}
+</style>
+</head>
+<body>
+<div class="desktop">
+ <div class="icons">
+  <div class="app" onclick="openApp('My Computer')">
+   <span>🖥️</span>My Computer
+  </div>
+  <div class="app" onclick="openApp('Recycle Bin')">
+   <span>🗑️</span>Recycle Bin
+  </div>
+  <div class="app" onclick="openApp('Settings')">
+   <span>⚙️</span>Settings
+  </div>
+ </div>
+</div>
+
+<div class="start" id="start">
+ <h2>Start</h2>
+ <button onclick="openApp('My Computer')">🖥️ My Computer</button>
+ <button onclick="openApp('Settings')">⚙️ Settings</button>
+ <button onclick="openApp('About PocketPC')">ℹ️ About</button>
+</div>
+
+<div class="window" id="window">
+ <header><b id="windowTitle">PocketPC</b>
+ <button onclick="closeApp()">✕</button></header>
+ <main id="windowContent"></main>
+</div>
+
+<div class="taskbar">
+ <button onclick="toggleStart()">⊞</button>
+ <button onclick="openApp('File Explorer')">📁</button>
+ <button onclick="openApp('Settings')">⚙️</button>
+ <span id="clock"></span>
+</div>
+
+<script>
+function toggleStart(){
+ let s=document.getElementById('start');
+ s.style.display=s.style.display==='block'?'none':'block';
+}
+function openApp(name){
+ document.getElementById('start').style.display='none';
+ document.getElementById('window').style.display='block';
+ document.getElementById('windowTitle').textContent=name;
+ document.getElementById('windowContent').innerHTML=
+ '<h2>'+name+'</h2><p>Welcome to PocketPC!</p>';
+}
+function closeApp(){
+ document.getElementById('window').style.display='none';
+}
+function updateClock(){
+ document.getElementById('clock').textContent=
+ new Date().toLocaleTimeString();
+}
+setInterval(updateClock,1000);
+updateClock();
+</script>
+</body>
+</html>
